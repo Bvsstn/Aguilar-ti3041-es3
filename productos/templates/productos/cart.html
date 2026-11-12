@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173d35">
+  <title>Mi carro | Ferresteban</title>
+  <link rel="stylesheet" href="{% static 'productos/catalogo.css' %}">
+</head>
+<body>
+  <div class="announcement">
+    <span class="announcement__spark" aria-hidden="true"></span>
+    Despacho gratis en compras sobre $49.990 <span class="announcement__separator">·</span> Envíos a todo Chile
+  </div>
+
+  <header class="site-header cart-header">
+    <a class="brand" href="{% url 'index' %}" aria-label="Ferresteban, inicio">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none">
+          <path d="M8 29.5 19.8 8l3.6 6.6L15.8 29.5H8Z" fill="currentColor"/>
+          <path d="m22.8 18.6 5.9 10.9h-7.5l-2.7-5 4.3-5.9Z" fill="currentColor" opacity=".68"/>
+          <path d="M27.1 8.5h5.1v5.1h-5.1z" fill="#F4A640"/>
+        </svg>
+      </span>
+      <span class="brand__name">ferre<span>steban</span></span>
+    </a>
+    <div class="cart-header__title"><h1>Mi carro</h1></div>
+    <div class="header-actions">
+      <a class="cart-continue" href="{% url 'index' %}">Seguir comprando</a>
+      {% include "productos/_account_menu.html" %}
+      <a class="cart-button" href="{% url 'cart' %}" aria-label="Carro de compras, {{ cart_count }} {% if cart_count == 1 %}producto{% else %}productos{% endif %}">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 4h2l2.1 11.1a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 1.9-1.4L21 9H6"></path>
+          <circle cx="9.5" cy="20" r="1.2"></circle>
+          <circle cx="18" cy="20" r="1.2"></circle>
+        </svg>
+        <span>Mi carro</span>
+        <span class="cart-button__count" aria-live="polite">{{ cart_count }}</span>
+      </a>
+    </div>
+  </header>
+
+  {% include "productos/_messages.html" %}
+
+  <main class="cart-page">
+    <div class="cart-page__intro">
+      <p class="eyebrow eyebrow--muted">TU SELECCIÓN</p>
+      <h2>Productos en tu carro</h2>
+    </div>
+
+    {% if items %}
+    <div class="cart-layout">
+      <section class="cart-items" aria-label="Productos agregados al carro">
+        {% for item in items %}
+        <article class="cart-item">
+          <div class="cart-item__image">
+            {% if item.producto.imagen_archivo %}
+            <img src="{{ item.producto.imagen_archivo.url }}" alt="{{ item.producto.nombre }}">
+            {% elif item.producto.imagen_url %}
+            <img src="{{ item.producto.imagen_url }}" alt="{{ item.producto.nombre }}">
+            {% endif %}
+          </div>
+          <div class="cart-item__details">
+            <h3>{{ item.producto.nombre }}</h3>
+            <p class="cart-item__category">{{ item.producto.categoria.nombre }}</p>
+            <p class="cart-item__price">CLP ${{ item.producto.precio|floatformat:"0g" }} c/u</p>
+            <div class="cart-item__controls">
+              <form class="cart-quantity-form" method="post" action="{% url 'update_cart' item.producto.pk %}">
+                {% csrf_token %}
+                <label for="quantity-{{ item.producto.pk }}">Cantidad</label>
+                <input id="quantity-{{ item.producto.pk }}" name="quantity" type="number" min="1" max="{{ item.producto.stock }}" value="{{ item.cantidad }}" required>
+                <button class="button button--secondary" type="submit">Actualizar</button>
+              </form>
+              <form method="post" action="{% url 'remove_from_cart' item.producto.pk %}">
+                {% csrf_token %}
+                <button class="cart-remove" type="submit">Eliminar</button>
+              </form>
+            </div>
+            {% if item.cantidad > item.producto.stock %}
+            <p class="cart-item__warning">Solo quedan {{ item.producto.stock }} unidades disponibles.</p>
+            {% endif %}
+          </div>
+          <p class="cart-item__subtotal">CLP ${{ item.subtotal|floatformat:"0g" }}</p>
+        </article>
+        {% endfor %}
+      </section>
+
+      <aside class="cart-summary" aria-label="Resumen de compra">
+        <h2>Resumen</h2>
+        <p><span>Productos ({{ cart_count }})</span><strong>CLP ${{ total|floatformat:"0g" }}</strong></p>
+        <p class="cart-summary__total"><span>Total</span><strong>CLP ${{ total|floatformat:"0g" }}</strong></p>
+        <form method="post" action="{% url 'checkout' %}">
+          {% csrf_token %}
+          <button class="button button--primary cart-summary__checkout" type="submit">Comprar</button>
+        </form>
+        <p class="cart-summary__notice">Al confirmar, se descontará el stock. No se procesa un pago en línea.</p>
+        <a class="cart-summary__continue" href="{% url 'index' %}">Agregar más productos</a>
+      </aside>
+    </div>
+    {% else %}
+    <section class="cart-empty">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M6 8h4l4 24h22l5-17H12"></path>
+        <circle cx="18" cy="39" r="2"></circle>
+        <circle cx="34" cy="39" r="2"></circle>
+      </svg>
+      <h2>Tu carro está vacío</h2>
+      <p>Explora el catálogo y agrega los productos que necesitas.</p>
+      <a class="button button--primary" href="{% url 'index' %}">Ver productos</a>
+    </section>
+    {% endif %}
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand brand--footer" href="{% url 'index' %}" aria-label="Ferresteban, inicio">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none"><path d="M8 29.5 19.8 8l3.6 6.6L15.8 29.5H8Z" fill="currentColor"/><path d="m22.8 18.6 5.9 10.9h-7.5l-2.7-5 4.3-5.9Z" fill="currentColor" opacity=".68"/><path d="M27.1 8.5h5.1v5.1h-5.1z" fill="#F4A640"/></svg>
+      </span>
+      <span class="brand__name">ferre<span>steban</span></span>
+    </a>
+    <p>La ferretería que acompaña tus proyectos, de norte a sur.</p>
+  </footer>
+  <script src="{% static 'productos/catalogo.js' %}" defer></script>
+</body>
+</html>

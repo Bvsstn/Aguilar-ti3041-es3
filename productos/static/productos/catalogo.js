@@ -7,39 +7,27 @@
   const status = document.querySelector("#search-status");
   const categoryLinks = Array.from(document.querySelectorAll("[data-category-link]"));
   const allLink = document.querySelector(".category-nav__link--active");
-  const cartCount = document.querySelector(".cart-button__count");
-  const cartButton = document.querySelector(".cart-button");
-  const toast = document.querySelector("#cart-toast");
-  const imageBase = document.querySelector("#product-grid")?.dataset.imageBase || "";
   let activeCategory = "";
-  let cartItems = 0;
-  let toastTimeout;
+
+  document.querySelectorAll("[data-message]").forEach((message) => {
+    const dismiss = () => {
+      message.classList.add("message--leaving");
+      window.setTimeout(() => message.remove(), 180);
+    };
+    const timer = message.hasAttribute("data-autodismiss")
+      ? window.setTimeout(dismiss, 2500)
+      : null;
+    message.querySelector("[data-dismiss-message]")?.addEventListener("click", () => {
+      if (timer !== null) window.clearTimeout(timer);
+      dismiss();
+    });
+  });
 
   const normalize = (value) => value
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLocaleLowerCase("es-CL")
     .trim();
-
-  const productPhoto = (card) => {
-    const name = normalize(card.dataset.productName || "");
-    const category = normalize(card.dataset.productCategory || "");
-
-    if (category.includes("jardin")) return "jardin.jpg";
-    if (category.includes("pinturas")) return "pinturas.jpg";
-    if (category.includes("seguridad")) return "electricidad-seguridad.jpg";
-    if (category.includes("gasfiteria")) return "electricidad-seguridad.jpg";
-    if (category.includes("fijaciones")) return "fijaciones.jpg";
-    if (category.includes("electricas")) {
-      return /sierra|esmeril|lijadora/.test(name) ? "carpinteria.jpg" : "taladro.jpg";
-    }
-    return "herramientas-manuales.jpg";
-  };
-
-  document.querySelectorAll("[data-product-image]").forEach((image) => {
-    const card = image.closest("[data-product-card]");
-    if (card) image.src = `${imageBase}${productPhoto(card)}?v=2`;
-  });
 
   const filterProducts = () => {
     const query = normalize(searchInputs[0]?.value || "");
@@ -95,17 +83,4 @@
     filterProducts();
   });
 
-  document.querySelectorAll("[data-add-to-cart]").forEach((button) => {
-    button.addEventListener("click", () => {
-      cartItems += 1;
-      if (cartCount) cartCount.textContent = String(cartItems);
-      cartButton?.setAttribute("aria-label", `Carro de compras, ${cartItems} ${cartItems === 1 ? "producto" : "productos"}`);
-      if (toast) {
-        toast.textContent = "Producto agregado a tu carro";
-        toast.classList.add("toast--visible");
-        window.clearTimeout(toastTimeout);
-        toastTimeout = window.setTimeout(() => toast.classList.remove("toast--visible"), 2200);
-      }
-    });
-  });
 })();

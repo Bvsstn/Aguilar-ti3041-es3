@@ -1,0 +1,30 @@
+{% if user.is_authenticated %}
+<details class="account-menu">
+  <summary class="account-menu__trigger">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="8" r="3.5"></circle>
+      <path d="M5 20a7 7 0 0 1 14 0"></path>
+    </svg>
+    <span>Bienvenido {{ user.first_name|default:user.email|default:user.username }}</span>
+    <svg class="account-menu__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+  </summary>
+  <div class="account-menu__panel">
+    <p>Sesión iniciada como</p>
+    <strong>{{ user.get_full_name|default:user.email|default:user.username }}</strong>
+    {% if user.is_staff %}<a href="{% url 'admin_panel' %}">Panel Administrador</a>{% endif %}
+    <a href="{% url 'edit_account' %}">Editar mis datos</a>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit">Cerrar sesión</button>
+    </form>
+  </div>
+</details>
+{% else %}
+<a class="account-link" href="{% url 'account' %}">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="8" r="3.5"></circle>
+    <path d="M5 20a7 7 0 0 1 14 0"></path>
+  </svg>
+  <span>Iniciar sesión</span>
+</a>
+{% endif %}

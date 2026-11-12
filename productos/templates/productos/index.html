@@ -39,22 +39,16 @@
     </div>
 
     <div class="header-actions">
-      <span class="delivery-note">
-        <svg class="delivery-note__pin" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"></path>
-          <circle cx="12" cy="10" r="2.2"></circle>
-        </svg>
-        Despachamos a todo Chile
-      </span>
-      <button class="cart-button" type="button" aria-label="Carro de compras, 0 productos">
+      {% include "productos/_account_menu.html" %}
+      <a class="cart-button" href="{% url 'cart' %}" aria-label="Carro de compras, {{ cart_count }} {% if cart_count == 1 %}producto{% else %}productos{% endif %}">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M3 4h2l2.1 11.1a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 1.9-1.4L21 9H6"></path>
           <circle cx="9.5" cy="20" r="1.2"></circle>
           <circle cx="18" cy="20" r="1.2"></circle>
         </svg>
         <span>Mi carro</span>
-        <span class="cart-button__count" aria-live="polite">0</span>
-      </button>
+        <span class="cart-button__count" aria-live="polite">{{ cart_count }}</span>
+      </a>
     </div>
   </header>
 
@@ -70,6 +64,8 @@
       <a class="category-nav__link" href="#catalogo" data-category-link="Jardín y exterior">Jardín</a>
     </div>
   </nav>
+
+  {% include "productos/_messages.html" %}
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
@@ -131,17 +127,24 @@
         </label>
       </div>
 
-      <div class="product-grid" id="product-grid" data-image-base="{% static 'productos/images/' %}" aria-live="polite">
+      <div class="product-grid" id="product-grid" aria-live="polite">
         {% for producto in productos %}
         <article class="product-card" data-product-card data-search="{{ producto.nombre|lower }} {{ producto.categoria.nombre|lower }}" data-product-name="{{ producto.nombre|lower }}" data-product-category="{{ producto.categoria.nombre|lower }}">
           <div class="product-card__visual product-card__visual--{{ forloop.counter0|divisibleby:4|yesno:'sage,cream' }}">
             <span class="product-card__category">{{ producto.categoria.nombre }}</span>
+            {% if producto.imagen_archivo %}
             <img
               class="product-card__image"
-              data-product-image
-              src="{% static 'productos/images/herramientas-manuales.jpg' %}"
-              alt="Imagen referencial de {{ producto.nombre }}"
+              src="{{ producto.imagen_archivo.url }}"
+              alt="{{ producto.nombre }}"
               loading="lazy">
+            {% elif producto.imagen_url %}
+            <img
+              class="product-card__image"
+              src="{{ producto.imagen_url }}"
+              alt="{{ producto.nombre }}"
+              loading="lazy">
+            {% endif %}
             {% if producto.stock == 0 %}
             <span class="stock-badge stock-badge--out">Agotado</span>
             {% elif producto.stock <= 5 %}
@@ -152,6 +155,14 @@
           </div>
           <div class="product-card__body">
             <h3>{{ producto.nombre }}</h3>
+            {% if producto.imagen_credito or producto.imagen_fuente_url %}
+            <p class="product-card__image-credit">
+              {{ producto.imagen_credito }}
+              {% if producto.imagen_fuente_url %}
+              <a href="{{ producto.imagen_fuente_url }}" target="_blank" rel="noopener noreferrer">Fuente</a>
+              {% endif %}
+            </p>
+            {% endif %}
             <div class="product-card__meta">
               <span class="product-card__stock">{% if producto.stock > 0 %}{{ producto.stock }} disponibles{% else %}Consulta reposición{% endif %}</span>
               <span class="product-card__rating" aria-label="Recomendado">
@@ -161,9 +172,12 @@
             </div>
             <div class="product-card__purchase">
               <p class="product-card__price"><span>CLP</span> ${{ producto.precio|floatformat:"0g" }}</p>
-              <button class="add-button" type="button" data-add-to-cart {% if producto.stock == 0 %}disabled{% endif %} aria-label="Agregar {{ producto.nombre }} al carro">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
-              </button>
+              <form method="post" action="{% url 'add_to_cart' producto.pk %}">
+                {% csrf_token %}
+                <button class="add-button" type="submit" {% if producto.stock == 0 %}disabled{% endif %} aria-label="Agregar {{ producto.nombre }} al carro">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                </button>
+              </form>
             </div>
           </div>
         </article>
@@ -197,10 +211,8 @@
       <span class="brand__name">ferre<span>steban</span></span>
     </a>
     <p>La ferretería que acompaña tus proyectos, de norte a sur.</p>
-    <span class="site-footer__copy">Ferresteban · Hecho para durar · Fotografías referenciales: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a></span>
+    <span class="site-footer__copy">Ferresteban · Hecho para durar · Imágenes de Unsplash, Wikimedia Commons y Flickr.</span>
   </footer>
-  <div class="toast" id="cart-toast" role="status" aria-live="polite"></div>
-
   <script src="{% static 'productos/catalogo.js' %}" defer></script>
 </body>
 </html>

@@ -1,0 +1,12 @@
+{% if messages %}
+<div class="messages" aria-live="polite" aria-label="Notificaciones">
+  {% for message in messages %}
+  <div class="message message--{{ message.tags }}" data-message {% if 'cart-added' in message.tags %}data-autodismiss{% endif %} role="{% if 'error' in message.tags %}alert{% else %}status{% endif %}">
+    <span class="message__text">{{ message }}</span>
+    <button class="message__close" type="button" data-dismiss-message aria-label="Cerrar notificación">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+    </button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

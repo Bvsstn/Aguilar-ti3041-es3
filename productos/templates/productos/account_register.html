@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173d35">
+  <title>Crear cuenta | Ferresteban</title>
+  <link rel="stylesheet" href="{% static 'productos/catalogo.css' %}">
+</head>
+<body>
+  <div class="announcement">
+    <span class="announcement__spark" aria-hidden="true"></span>
+    Despacho gratis en compras sobre $49.990 <span class="announcement__separator">·</span> Envíos a todo Chile
+  </div>
+
+  <header class="site-header account-header">
+    <a class="brand" href="{% url 'index' %}" aria-label="Ferresteban, inicio">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none">
+          <path d="M8 29.5 19.8 8l3.6 6.6L15.8 29.5H8Z" fill="currentColor"/>
+          <path d="m22.8 18.6 5.9 10.9h-7.5l-2.7-5 4.3-5.9Z" fill="currentColor" opacity=".68"/>
+          <path d="M27.1 8.5h5.1v5.1h-5.1z" fill="#F4A640"/>
+        </svg>
+      </span>
+      <span class="brand__name">ferre<span>steban</span></span>
+    </a>
+    <a class="account-header__back" href="{% url 'account' %}">Ya tengo una cuenta</a>
+  </header>
+
+  {% include "productos/_messages.html" %}
+
+  <main class="account-page account-page--register">
+    <div class="account-page__intro">
+      <p class="eyebrow eyebrow--muted">CUENTA FERRESTEBAN</p>
+      <h1>Tu primera compra empieza aquí.</h1>
+      <p>Crea tu cuenta para guardar tus datos de contacto y entrega.</p>
+    </div>
+
+    <section class="account-card account-card--register">
+      <div class="account-card__heading">
+        <span class="account-card__index">01</span>
+        <div>
+          <p class="eyebrow eyebrow--muted">EMPECEMOS</p>
+          <h2>Crear cuenta</h2>
+        </div>
+      </div>
+      {% if form.non_field_errors %}
+      <div class="account-form__errors" role="alert">{{ form.non_field_errors }}</div>
+      {% endif %}
+      <form method="post" action="{% url 'account_register' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="register">
+        {% include "productos/_account_form_fields.html" with form=form %}
+        <button class="button button--primary account-form__submit" type="submit">Crear mi cuenta</button>
+      </form>
+      <p class="account-first-purchase">¿Ya tienes una cuenta? <a href="{% url 'account' %}">Inicia sesión</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand brand--footer" href="{% url 'index' %}" aria-label="Ferresteban, inicio">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none"><path d="M8 29.5 19.8 8l3.6 6.6L15.8 29.5H8Z" fill="currentColor"/><path d="m22.8 18.6 5.9 10.9h-7.5l-2.7-5 4.3-5.9Z" fill="currentColor" opacity=".68"/><path d="M27.1 8.5h5.1v5.1h-5.1z" fill="#F4A640"/></svg>
+      </span>
+      <span class="brand__name">ferre<span>steban</span></span>
+    </a>
+    <p>La ferretería que acompaña tus proyectos, de norte a sur.</p>
+  </footer>
+</body>
+</html>

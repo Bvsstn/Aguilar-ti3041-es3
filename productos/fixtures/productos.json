@@ -62,7 +62,8 @@
       "nombre": "Martillo carpintero 16 oz mango fibra",
       "categoria": 1,
       "precio": 8990,
-      "stock": 18
+      "stock": 18,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Carpenter%27s_hammer.JPG/500px-Carpenter%27s_hammer.JPG"
     }
   },
   {
@@ -72,7 +73,8 @@
       "nombre": "Alicate universal 8 pulgadas",
       "categoria": 1,
       "precio": 7490,
-      "stock": 24
+      "stock": 24,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/05-02_combination_pliers_big.jpg/500px-05-02_combination_pliers_big.jpg"
     }
   },
   {
@@ -82,7 +84,8 @@
       "nombre": "Set de destornilladores 6 piezas",
       "categoria": 1,
       "precio": 5990,
-      "stock": 31
+      "stock": 31,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Robertson_screwdriver_set.jpg/500px-Robertson_screwdriver_set.jpg"
     }
   },
   {
@@ -92,7 +95,8 @@
       "nombre": "Llave ajustable cromada 10 pulgadas",
       "categoria": 1,
       "precio": 10990,
-      "stock": 12
+      "stock": 12,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Adjustable_spanner.jpg/500px-Adjustable_spanner.jpg"
     }
   },
   {
@@ -102,7 +106,8 @@
       "nombre": "Huincha metálica 5 m",
       "categoria": 1,
       "precio": 3490,
-      "stock": 42
+      "stock": 42,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Stanley_PowerLock_tape_measure_on_tool_box.jpg/500px-Stanley_PowerLock_tape_measure_on_tool_box.jpg"
     }
   },
   {
@@ -112,7 +117,8 @@
       "nombre": "Nivel de aluminio 60 cm",
       "categoria": 1,
       "precio": 8990,
-      "stock": 14
+      "stock": 14,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/A_bright_red_leveling_tool_is_positioned_on_a_surface.jpg/500px-A_bright_red_leveling_tool_is_positioned_on_a_surface.jpg"
     }
   },
   {
@@ -122,7 +128,8 @@
       "nombre": "Serrucho carpintero 20 pulgadas",
       "categoria": 1,
       "precio": 7990,
-      "stock": 16
+      "stock": 16,
+      "imagen_url": "https://live.staticflickr.com/2088/2277582023_c6d78d2ffd_b.jpg"
     }
   },
   {
@@ -132,7 +139,8 @@
       "nombre": "Combo llave punta corona 8 piezas",
       "categoria": 1,
       "precio": 18990,
-      "stock": 9
+      "stock": 9,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Stanley-Combination-Wrench-Set_274710-480x360_%284904404909%29.jpg/500px-Stanley-Combination-Wrench-Set_274710-480x360_%284904404909%29.jpg"
     }
   },
   {
@@ -142,7 +150,8 @@
       "nombre": "Taladro percutor 650 W",
       "categoria": 2,
       "precio": 49990,
-      "stock": 7
+      "stock": 7,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Vintage_Power_Tool_-_Black_%26_Decker_P80-38_Rotary_Hammer_Drill_-_5011437838.jpg/500px-Vintage_Power_Tool_-_Black_%26_Decker_P80-38_Rotary_Hammer_Drill_-_5011437838.jpg"
     }
   },
   {
@@ -152,7 +161,8 @@
       "nombre": "Esmeril angular 4 1/2 pulgadas 750 W",
       "categoria": 2,
       "precio": 39990,
-      "stock": 11
+      "stock": 11,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Linked_mall_indoor_air_pollution_angle_grinder_03.jpg/500px-Linked_mall_indoor_air_pollution_angle_grinder_03.jpg"
     }
   },
   {
@@ -162,7 +172,8 @@
       "nombre": "Sierra circular 7 1/4 pulgadas 1400 W",
       "categoria": 2,
       "precio": 89990,
-      "stock": 4
+      "stock": 4,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/DeWalt_circular_saw_in_use.jpg/500px-DeWalt_circular_saw_in_use.jpg"
     }
   },
   {
@@ -172,7 +183,8 @@
       "nombre": "Atornillador inalámbrico 12 V con batería",
       "categoria": 2,
       "precio": 59990,
-      "stock": 6
+      "stock": 6,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/MacAllister_cordless_screwdriver_02.jpg/500px-MacAllister_cordless_screwdriver_02.jpg"
     }
   },
   {
@@ -182,7 +194,8 @@
       "nombre": "Rotomartillo SDS Plus 800 W",
       "categoria": 2,
       "precio": 119990,
-      "stock": 3
+      "stock": 3,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Bosch_GBH2-26_professional_Rotary_Hammer_Drill_PICT4578.jpg/500px-Bosch_GBH2-26_professional_Rotary_Hammer_Drill_PICT4578.jpg"
     }
   },
   {
@@ -192,7 +205,8 @@
       "nombre": "Lijadora orbital 240 W",
       "categoria": 2,
       "precio": 34990,
-      "stock": 8
+      "stock": 8,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Makita_BO5041_Random_Orbit_Sander_%286169695568%29.jpg/500px-Makita_BO5041_Random_Orbit_Sander_%286169695568%29.jpg"
     }
   },
   {
@@ -202,7 +216,8 @@
       "nombre": "Caja tornillos volcanita 6 x 1 1/4 500 unidades",
       "categoria": 3,
       "precio": 7990,
-      "stock": 22
+      "stock": 22,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Skruvar.jpg/500px-Skruvar.jpg"
     }
   },
   {
@@ -212,7 +227,8 @@
       "nombre": "Clavo corriente 2 pulgadas kilo",
       "categoria": 3,
       "precio": 2490,
-      "stock": 35
+      "stock": 35,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Double-headed_nail.agr.jpg/500px-Double-headed_nail.agr.jpg"
     }
   },
   {
@@ -222,7 +238,8 @@
       "nombre": "Perno coche galvanizado 3/8 x 3 pulgadas",
       "categoria": 3,
       "precio": 1190,
-      "stock": 50
+      "stock": 50,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/AFS_-_fasteners_picture.JPG/500px-AFS_-_fasteners_picture.JPG"
     }
   },
   {
@@ -232,7 +249,8 @@
       "nombre": "Tarugo nylon 8 mm con tornillo pack 50",
       "categoria": 3,
       "precio": 3990,
-      "stock": 27
+      "stock": 27,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Tarugos.JPG/500px-Tarugos.JPG"
     }
   },
   {
@@ -242,7 +260,8 @@
       "nombre": "Tornillo autoperforante zincado pack 100",
       "categoria": 3,
       "precio": 4990,
-      "stock": 19
+      "stock": 19,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Hex-head-self-drilling-screw-1614969_340.png/500px-Hex-head-self-drilling-screw-1614969_340.png"
     }
   },
   {
@@ -252,7 +271,8 @@
       "nombre": "Candado de acero 50 mm",
       "categoria": 3,
       "precio": 6990,
-      "stock": 13
+      "stock": 13,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Steel_Cable_Padlock.jpg/500px-Steel_Cable_Padlock.jpg"
     }
   },
   {
@@ -262,7 +282,8 @@
       "nombre": "Pintura látex interior blanca 1 galón",
       "categoria": 4,
       "precio": 18990,
-      "stock": 10
+      "stock": 10,
+      "imagen_url": "https://live.staticflickr.com/3543/3413845072_5a9fda8bc9_b.jpg"
     }
   },
   {
@@ -272,7 +293,8 @@
       "nombre": "Esmalte al agua blanco 1 galón",
       "categoria": 4,
       "precio": 24990,
-      "stock": 8
+      "stock": 8,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Paint_bucket_and_brush.jpg/500px-Paint_bucket_and_brush.jpg"
     }
   },
   {
@@ -282,7 +304,8 @@
       "nombre": "Anticorrosivo gris 1 galón",
       "categoria": 4,
       "precio": 21990,
-      "stock": 6
+      "stock": 6,
+      "imagen_url": "https://live.staticflickr.com/4/9157418_4f46ca3bbe.jpg"
     }
   },
   {
@@ -292,7 +315,8 @@
       "nombre": "Silicona neutra transparente 280 ml",
       "categoria": 4,
       "precio": 4990,
-      "stock": 23
+      "stock": 23,
+      "imagen_url": "https://live.staticflickr.com/4141/4817475284_c26acfc1d8.jpg"
     }
   },
   {
@@ -302,7 +326,8 @@
       "nombre": "Adhesivo cerámico saco 25 kg",
       "categoria": 4,
       "precio": 6990,
-      "stock": 17
+      "stock": 17,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/A_bags_of_Cement_in_Awka.jpg/500px-A_bags_of_Cement_in_Awka.jpg"
     }
   },
   {
@@ -312,7 +337,8 @@
       "nombre": "Cinta teflón para gasfitería 12 mm",
       "categoria": 5,
       "precio": 1000,
-      "stock": 50
+      "stock": 50,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/PTFE_seal_tape.jpg/500px-PTFE_seal_tape.jpg"
     }
   },
   {
@@ -322,7 +348,8 @@
       "nombre": "Llave de paso bronce 1/2 pulgada",
       "categoria": 5,
       "precio": 5990,
-      "stock": 14
+      "stock": 14,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Close-up_of_brass_plumbing_valves_with_red_handles_in_a_home_installation.jpg/500px-Close-up_of_brass_plumbing_valves_with_red_handles_in_a_home_installation.jpg"
     }
   },
   {
@@ -332,7 +359,8 @@
       "nombre": "Flexible para lavaplatos 1/2 x 1/2 40 cm",
       "categoria": 5,
       "precio": 3990,
-      "stock": 18
+      "stock": 18,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Flexible_Metal-Wrapped_Plumbing_Water_Line_%2839935416743%29.jpg/500px-Flexible_Metal-Wrapped_Plumbing_Water_Line_%2839935416743%29.jpg"
     }
   },
   {
@@ -342,7 +370,8 @@
       "nombre": "Cable eléctrico EVA 2,5 mm² rollo 10 m",
       "categoria": 5,
       "precio": 12990,
-      "stock": 7
+      "stock": 7,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/DZ6_2542_A_narrow_cluttered_electronics_shop_aisle_lined_with_shelves_of_components_spools_of_wire_and_glass_display_cases_overflowing_with_parts.jpg/500px-DZ6_2542_A_narrow_cluttered_electronics_shop_aisle_lined_with_shelves_of_components_spools_of_wire_and_glass_display_cases_overflowing_with_parts.jpg"
     }
   },
   {
@@ -352,7 +381,8 @@
       "nombre": "Enchufe doble embutido blanco",
       "categoria": 5,
       "precio": 2990,
-      "stock": 26
+      "stock": 26,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Electrical-Outlet-8830c.jpg/500px-Electrical-Outlet-8830c.jpg"
     }
   },
   {
@@ -362,7 +392,8 @@
       "nombre": "Automático termomagnético 16 A",
       "categoria": 5,
       "precio": 8990,
-      "stock": 11
+      "stock": 11,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/Electric_circuit_breaker_fuse_box_in_private_home.jpg/500px-Electric_circuit_breaker_fuse_box_in_private_home.jpg"
     }
   },
   {
@@ -372,7 +403,8 @@
       "nombre": "Guantes cabritilla reforzados talla L",
       "categoria": 6,
       "precio": 4990,
-      "stock": 20
+      "stock": 20,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Leather_work_gloves_composite_P1010224_copy.jpg/500px-Leather_work_gloves_composite_P1010224_copy.jpg"
     }
   },
   {
@@ -382,7 +414,8 @@
       "nombre": "Lentes de seguridad transparentes antiempañantes",
       "categoria": 6,
       "precio": 2490,
-      "stock": 32
+      "stock": 32,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/Wiley-X_PT-1_3-lens.jpg/500px-Wiley-X_PT-1_3-lens.jpg"
     }
   },
   {
@@ -392,7 +425,8 @@
       "nombre": "Casco de seguridad blanco con ajuste",
       "categoria": 6,
       "precio": 8990,
-      "stock": 9
+      "stock": 9,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Cologne_Germany_Safety-helmet-with-headset-01.jpg/500px-Cologne_Germany_Safety-helmet-with-headset-01.jpg"
     }
   },
   {
@@ -402,7 +436,8 @@
       "nombre": "Protector auditivo tipo copa 25 dB",
       "categoria": 6,
       "precio": 6990,
-      "stock": 5
+      "stock": 5,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Over_the_head_earmuffs_and_other_ear_protection_gear_in_German_hardware_store_%28cropped%29.jpg/500px-Over_the_head_earmuffs_and_other_ear_protection_gear_in_German_hardware_store_%28cropped%29.jpg"
     }
   },
   {
@@ -412,7 +447,8 @@
       "nombre": "Botín de seguridad cuero talla 42",
       "categoria": 6,
       "precio": 45990,
-      "stock": 4
+      "stock": 4,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Steel-toe_boots.jpg/500px-Steel-toe_boots.jpg"
     }
   },
   {
@@ -422,7 +458,8 @@
       "nombre": "Pala punta huevo con mango",
       "categoria": 7,
       "precio": 12990,
-      "stock": 8
+      "stock": 8,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Giant_Spade_St_Mellons.jpg/500px-Giant_Spade_St_Mellons.jpg"
     }
   },
   {
@@ -432,7 +469,8 @@
       "nombre": "Manguera jardín reforzada 1/2 pulgada 20 m",
       "categoria": 7,
       "precio": 15990,
-      "stock": 6
+      "stock": 6,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Blue_hose_coiled_around_a_manhole_cover_in_a_grassy_outdoor_area.jpg/500px-Blue_hose_coiled_around_a_manhole_cover_in_a_grassy_outdoor_area.jpg"
     }
   },
   {
@@ -442,7 +480,8 @@
       "nombre": "Tijera de podar bypass 8 pulgadas",
       "categoria": 7,
       "precio": 8990,
-      "stock": 12
+      "stock": 12,
+      "imagen_url": "https://live.staticflickr.com/5530/30173721920_68206c2824_b.jpg"
     }
   },
   {
@@ -452,7 +491,8 @@
       "nombre": "Carretilla construcción 90 litros",
       "categoria": 7,
       "precio": 69990,
-      "stock": 2
+      "stock": 2,
+      "imagen_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/2008-07-15_Construction_wheelbarrow_at_Duke.jpg/500px-2008-07-15_Construction_wheelbarrow_at_Duke.jpg"
     }
   }
 ]
