@@ -211,7 +211,11 @@
       <span class="brand__name">ferre<span>steban</span></span>
     </a>
     <p>La ferretería que acompaña tus proyectos, de norte a sur.</p>
-    <span class="site-footer__copy">Ferresteban · Hecho para durar · Imágenes de Unsplash, Wikimedia Commons y Flickr.</span>
+    <span class="site-footer__copy">
+      <a href="{% url 'customer_consultation' %}">Enviar una consulta</a>
+      <span>Visitas en esta sesión: {{ visit_count }}</span>
+      Ferresteban · Hecho para durar · Imágenes de Unsplash, Wikimedia Commons y Flickr.
+    </span>
   </footer>
   <script src="{% static 'productos/catalogo.js' %}" defer></script>
 </body>

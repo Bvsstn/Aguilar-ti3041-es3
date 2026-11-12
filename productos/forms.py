@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.db import transaction
 
-from .models import PerfilUsuario, Producto
+from .models import ConsultaCliente, PerfilUsuario, Producto
 
 
 class LoginForm(forms.Form):
@@ -210,3 +210,32 @@ class ProductoAdminForm(forms.ModelForm):
         if precio < 0:
             raise ValidationError('El precio no puede ser negativo.')
         return precio
+
+
+class ConsultaClienteForm(forms.ModelForm):
+    class Meta:
+        model = ConsultaCliente
+        fields = ('nombre', 'correo', 'producto_interes', 'mensaje')
+        labels = {
+            'nombre': 'Nombre',
+            'correo': 'Correo electrónico',
+            'producto_interes': 'Producto de interés (opcional)',
+            'mensaje': 'Mensaje',
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'autocomplete': 'name'}),
+            'correo': forms.EmailInput(attrs={'autocomplete': 'email'}),
+            'mensaje': forms.Textarea(attrs={'rows': 5}),
+        }
+
+    def clean_nombre(self):
+        nombre = self.cleaned_data['nombre'].strip()
+        if len(nombre) < 2:
+            raise ValidationError('El nombre debe tener al menos 2 caracteres.')
+        return nombre
+
+    def clean_mensaje(self):
+        mensaje = self.cleaned_data['mensaje'].strip()
+        if len(mensaje) < 20:
+            raise ValidationError('El mensaje debe tener al menos 20 caracteres.')
+        return mensaje

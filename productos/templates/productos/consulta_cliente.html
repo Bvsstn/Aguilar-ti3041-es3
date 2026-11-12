@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173d35">
+  <title>Enviar una consulta | Ferresteban</title>
+  <link rel="stylesheet" href="{% static 'productos/catalogo.css' %}">
+</head>
+<body>
+  <div class="announcement">
+    <span class="announcement__spark" aria-hidden="true"></span>
+    Despacho gratis en compras sobre $49.990 <span class="announcement__separator">·</span> Envíos a todo Chile
+  </div>
+  <header class="site-header account-header">
+    <a class="brand" href="{% url 'index' %}" aria-label="Ferresteban, inicio">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none">
+          <path d="M8 29.5 19.8 8l3.6 6.6L15.8 29.5H8Z" fill="currentColor"/>
+          <path d="m22.8 18.6 5.9 10.9h-7.5l-2.7-5 4.3-5.9Z" fill="currentColor" opacity=".68"/>
+          <path d="M27.1 8.5h5.1v5.1h-5.1z" fill="#F4A640"/>
+        </svg>
+      </span>
+      <span class="brand__name">ferre<span>steban</span></span>
+    </a>
+    <a class="account-header__back" href="{% url 'index' %}">Volver a la tienda</a>
+  </header>
+
+  {% include "productos/_messages.html" %}
+
+  <main class="account-page consultation-page">
+    <div class="account-page__intro">
+      <p class="eyebrow eyebrow--muted">ESTAMOS PARA AYUDARTE</p>
+      <h1>Envíanos tu consulta.</h1>
+      <p>Déjanos tus datos y mensaje; nuestro equipo podrá revisar tu consulta.</p>
+    </div>
+
+    <section class="account-card account-card--edit consultation-card">
+      {% if form.non_field_errors %}
+      <div class="account-form__errors" role="alert">{{ form.non_field_errors }}</div>
+      {% endif %}
+      <form method="post" action="{% url 'customer_consultation' %}">
+        {% csrf_token %}
+        {% include "productos/_account_form_fields.html" with form=form %}
+        <button class="button button--primary account-form__submit" type="submit">Enviar consulta</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand brand--footer" href="{% url 'index' %}" aria-label="Ferresteban, inicio">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none"><path d="M8 29.5 19.8 8l3.6 6.6L15.8 29.5H8Z" fill="currentColor"/><path d="m22.8 18.6 5.9 10.9h-7.5l-2.7-5 4.3-5.9Z" fill="currentColor" opacity=".68"/><path d="M27.1 8.5h5.1v5.1h-5.1z" fill="#F4A640"/></svg>
+      </span>
+      <span class="brand__name">ferre<span>steban</span></span>
+    </a>
+    <p>La ferretería que acompaña tus proyectos, de norte a sur.</p>
+  </footer>
+  <script src="{% static 'productos/catalogo.js' %}" defer></script>
+</body>
+</html>

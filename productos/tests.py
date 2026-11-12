@@ -3,14 +3,15 @@ import os
 import tempfile
 from urllib.parse import urlsplit
 
+from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from django.test import Client, TestCase
 from django.urls import reverse
 from PIL import Image
 
-from .models import Categoria, Producto
+from .models import Categoria, ConsultaCliente, Producto
 
 
 class CatalogoUrlTests(TestCase):
@@ -21,6 +22,138 @@ class CatalogoUrlTests(TestCase):
 
                 self.assertEqual(response.status_code, 200)
                 self.assertTemplateUsed(response, 'productos/index.html')
+
+    def test_visit_counter_increments_in_the_session(self):
+        first_response = self.client.get('/')
+        second_response = self.client.get('/')
+
+        self.assertContains(first_response, 'Visitas en esta sesión: 1')
+        self.assertContains(second_response, 'Visitas en esta sesión: 2')
+        self.assertEqual(self.client.session['visit_count'], 2)
+
+
+class ConsultaClienteTests(TestCase):
+    def setUp(self):
+        self.category = Categoria.objects.create(
+            nombre='Herramientas',
+            descripcion='Herramientas para consultas.',
+        )
+        self.product = Producto.objects.create(
+            nombre='Martillo de consulta',
+            categoria=self.category,
+            precio='1200.00',
+            stock=5,
+            imagen_url='https://example.com/martillo.jpg',
+        )
+
+    def test_consultation_page_has_csrf_and_optional_product(self):
+        response = self.client.get(reverse('customer_consultation'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'productos/consulta_cliente.html')
+        self.assertContains(response, 'csrfmiddlewaretoken')
+        self.assertContains(response, self.product.nombre)
+        self.assertTrue(admin.site.is_registered(ConsultaCliente))
+
+    def test_valid_consultation_is_saved_and_confirmation_shown(self):
+        response = self.client.post(
+            reverse('customer_consultation'),
+            {
+                'nombre': 'Ana Pérez',
+                'correo': 'ana@example.com',
+                'producto_interes': self.product.pk,
+                'mensaje': 'Quisiera conocer más detalles de este producto.',
+            },
+            follow=True,
+        )
+
+        consulta = ConsultaCliente.objects.get()
+        self.assertEqual(consulta.nombre, 'Ana Pérez')
+        self.assertEqual(consulta.correo, 'ana@example.com')
+        self.assertEqual(consulta.producto_interes, self.product)
+        self.assertTrue(consulta.fecha)
+        self.assertContains(response, 'Tu consulta se envió correctamente.')
+
+    def test_consultation_can_be_sent_without_a_product(self):
+        response = self.client.post(
+            reverse('customer_consultation'),
+            {
+                'nombre': 'Ana Pérez',
+                'correo': 'ana@example.com',
+                'producto_interes': '',
+                'mensaje': 'Necesito ayuda con una compra que ya realicé.',
+            },
+        )
+
+        self.assertRedirects(response, reverse('customer_consultation'))
+        self.assertIsNone(ConsultaCliente.objects.get().producto_interes)
+
+    def test_invalid_consultation_fields_are_rejected(self):
+        response = self.client.post(
+            reverse('customer_consultation'),
+            {
+                'nombre': 'A',
+                'correo': 'correo-no-valido',
+                'producto_interes': '',
+                'mensaje': 'Muy corto',
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(ConsultaCliente.objects.count(), 0)
+        self.assertContains(response, 'El nombre debe tener al menos 2 caracteres.')
+        self.assertContains(response, 'Enter a valid email address.')
+        self.assertContains(response, 'El mensaje debe tener al menos 20 caracteres.')
+
+    def test_required_fields_are_validated(self):
+        response = self.client.post(
+            reverse('customer_consultation'),
+            {
+                'nombre': '',
+                'correo': '',
+                'producto_interes': '',
+                'mensaje': '',
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(ConsultaCliente.objects.count(), 0)
+        self.assertContains(response, 'This field is required.')
+
+    def test_consultation_post_requires_csrf_token(self):
+        csrf_client = Client(enforce_csrf_checks=True)
+
+        response = csrf_client.post(
+            reverse('customer_consultation'),
+            {
+                'nombre': 'Ana Pérez',
+                'correo': 'ana@example.com',
+                'producto_interes': '',
+                'mensaje': 'Necesito ayuda con una compra que ya realicé.',
+            },
+        )
+
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(ConsultaCliente.objects.count(), 0)
+
+    def test_valid_csrf_token_allows_consultation_submission(self):
+        csrf_client = Client(enforce_csrf_checks=True)
+        csrf_client.get(reverse('customer_consultation'))
+        csrf_token = csrf_client.cookies['csrftoken'].value
+
+        response = csrf_client.post(
+            reverse('customer_consultation'),
+            {
+                'nombre': 'Ana Pérez',
+                'correo': 'ana@example.com',
+                'producto_interes': '',
+                'mensaje': 'Necesito ayuda con una compra que ya realicé.',
+            },
+            HTTP_X_CSRFTOKEN=csrf_token,
+        )
+
+        self.assertRedirects(response, reverse('customer_consultation'))
+        self.assertEqual(ConsultaCliente.objects.count(), 1)
 
 
 class ProductoFixtureImagenTests(TestCase):

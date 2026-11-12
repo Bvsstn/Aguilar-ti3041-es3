@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categoria,Producto
+from .models import Categoria, ConsultaCliente, Producto
 
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombre')
@@ -12,6 +12,15 @@ class ProductoAdmin(admin.ModelAdmin):
     readonly_fields = ('creado_en',)
     exclude = ('imagen_fuente_url', 'imagen_credito')
 
+
+class ConsultaClienteAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'correo', 'producto_interes', 'fecha')
+    search_fields = ('nombre', 'correo', 'mensaje', 'producto_interes__nombre')
+    list_filter = ('fecha',)
+    readonly_fields = ('fecha',)
+
+
 # Register your models here.
 admin.site.register(Categoria, CategoriaAdmin)
 admin.site.register(Producto, ProductoAdmin)
+admin.site.register(ConsultaCliente, ConsultaClienteAdmin)

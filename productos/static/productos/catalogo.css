@@ -381,6 +381,13 @@ a { color: inherit; text-decoration: none; }
 .account-header__back:hover, .account-form__cancel:hover { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
 .account-card--edit { max-width: 640px; }
 .account-form__actions { display: flex; align-items: center; gap: 17px; margin-top: 20px; }
+.consultation-page { max-width: 760px; }
+.consultation-card { max-width: 680px; margin: 0 auto; }
+.consultation-card .account-field textarea,
+.consultation-card .account-field select { width: 100%; min-height: 44px; padding: 9px 11px; border: 1px solid #dfe5dd; border-radius: 4px; outline: 0; color: var(--ink); background: #fbfcfa; font: 15px "DM Sans", sans-serif; transition: border-color .18s, box-shadow .18s; }
+.consultation-card .account-field textarea { min-height: 130px; resize: vertical; }
+.consultation-card .account-field textarea:focus,
+.consultation-card .account-field select:focus { border-color: #90a99a; box-shadow: 0 0 0 3px rgb(23 61 53 / 8%); }
 
 .admin-page { max-width: 1080px; min-height: 68vh; margin: 0 auto; padding: 52px 24px 78px; }
 .admin-page--wide { max-width: 1320px; }

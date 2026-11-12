@@ -11,6 +11,7 @@ from django.db.models import Avg, Count, Sum
 
 from .forms import (
     AccountUpdateForm,
+    ConsultaClienteForm,
     LoginForm,
     ProductoAdminForm,
     RegistrationForm,
@@ -32,11 +33,29 @@ def _cart_count(request):
 
 
 def index(request):
+    visit_count = request.session.get('visit_count', 0)
+    if type(visit_count) is not int or visit_count < 0:
+        visit_count = 0
+    visit_count += 1
+    request.session['visit_count'] = visit_count
     productos = Producto.objects.select_related('categoria').order_by('nombre')
     return render(request, 'productos/index.html', {
         'productos': productos,
         'cart_count': _cart_count(request),
+        'visit_count': visit_count,
     })
+
+
+@require_http_methods(['GET', 'POST'])
+def customer_consultation(request):
+    form_data = request.POST if request.method == 'POST' else None
+    form = ConsultaClienteForm(form_data)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Tu consulta se envió correctamente.')
+        return redirect('customer_consultation')
+
+    return render(request, 'productos/consulta_cliente.html', {'form': form})
 
 
 @require_http_methods(['GET', 'POST'])
