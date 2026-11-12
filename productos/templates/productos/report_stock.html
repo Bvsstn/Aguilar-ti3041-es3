@@ -1,0 +1,54 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Stock crítico | Reportes{% endblock %}
+
+{% block content %}
+<div class="admin-page__intro">
+  <p class="eyebrow eyebrow--muted">REPORTE DE INVENTARIO</p>
+  <h1>Stock crítico y no disponibles</h1>
+  <p>Revisa productos agotados o con stock menor o igual al umbral indicado.</p>
+</div>
+
+<form class="admin-filters report-stock-filter" method="get">
+  <label>
+    <span>Umbral máximo de stock</span>
+    <input type="number" name="umbral" min="0" value="{{ threshold }}">
+  </label>
+  <div class="admin-filters__actions">
+    <button class="button button--primary" type="submit">Aplicar umbral</button>
+  </div>
+</form>
+
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr><th>Producto</th><th>Stock</th><th>Estado</th><th>Grupo</th><th>Precio</th></tr>
+    </thead>
+    <tbody>
+      {% for producto in productos %}
+      <tr>
+        <td>
+          <div class="admin-product-cell">
+            <span class="admin-product-cell__image">
+              {% if producto.imagen_archivo %}<img src="{{ producto.imagen_archivo.url }}" alt="">
+              {% elif producto.imagen_url %}<img src="{{ producto.imagen_url }}" alt="">
+              {% endif %}
+            </span>
+            <strong>{{ producto.nombre }}</strong>
+          </div>
+        </td>
+        <td>{{ producto.stock }}</td>
+        <td>
+          {% if producto.stock <= 0 %}<span class="admin-status admin-status--empty">No disponible</span>
+          {% else %}<span class="admin-status admin-status--critical">Stock crítico</span>{% endif %}
+        </td>
+        <td>{{ producto.categoria.nombre }}</td>
+        <td>CLP ${{ producto.precio|floatformat:"0g" }}</td>
+      </tr>
+      {% empty %}
+      <tr><td class="admin-table__empty" colspan="5">No hay productos con stock igual o menor a {{ threshold }}.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

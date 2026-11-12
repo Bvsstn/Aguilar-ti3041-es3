@@ -1,0 +1,35 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Reportes | Panel Administrador{% endblock %}
+
+{% block content %}
+<div class="admin-page__intro">
+  <p class="eyebrow eyebrow--muted">ANÁLISIS DE LA TIENDA</p>
+  <h1>Reportes</h1>
+  <p>Selecciona un reporte para revisar el catálogo y el inventario.</p>
+</div>
+<div class="admin-option-grid">
+  <a class="admin-option admin-option--accent" href="{% url 'admin_category_report' %}">
+    <span class="admin-option__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h4"></path></svg>
+    </span>
+    <span class="admin-option__copy">
+      <span class="eyebrow eyebrow--muted">CATÁLOGO</span>
+      <strong>Productos por categoría</strong>
+      <span>Cantidad individual y por grupo, precio promedio y stock total.</span>
+    </span>
+    <span class="admin-option__arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="admin-option" href="{% url 'admin_stock_report' %}">
+    <span class="admin-option__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M12 3 22 20H2L12 3ZM12 9v5M12 17h.01"></path></svg>
+    </span>
+    <span class="admin-option__copy">
+      <span class="eyebrow eyebrow--muted">INVENTARIO</span>
+      <strong>Stock crítico y no disponibles</strong>
+      <span>Productos con unidades bajo el umbral seleccionado, incluidos los agotados.</span>
+    </span>
+    <span class="admin-option__arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+{% endblock %}

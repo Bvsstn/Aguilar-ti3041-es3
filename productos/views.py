@@ -7,6 +7,7 @@ from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_http_methods, require_POST
+from django.db.models import Avg, Count, Sum
 
 from .forms import (
     AccountUpdateForm,
@@ -107,6 +108,39 @@ def _staff_required(view_func):
 @_staff_required
 def admin_panel(request):
     return render(request, 'productos/admin_panel.html')
+
+
+@_staff_required
+def admin_reports(request):
+    return render(request, 'productos/admin_reports.html')
+
+
+@_staff_required
+def admin_category_report(request):
+    categorias = Categoria.objects.annotate(
+        total_productos=Count('producto'),
+        precio_promedio=Avg('producto__precio'),
+        stock_total=Sum('producto__stock'),
+    ).prefetch_related('producto_set').order_by('nombre')
+    return render(request, 'productos/report_categories.html', {
+        'categorias': categorias,
+    })
+
+
+@_staff_required
+def admin_stock_report(request):
+    try:
+        threshold = int(request.GET.get('umbral', '5'))
+    except (TypeError, ValueError):
+        threshold = 5
+    threshold = max(threshold, 0)
+    productos = Producto.objects.select_related('categoria').filter(
+        stock__lte=threshold,
+    ).order_by('stock', 'nombre')
+    return render(request, 'productos/report_stock.html', {
+        'productos': productos,
+        'threshold': threshold,
+    })
 
 
 @_staff_required

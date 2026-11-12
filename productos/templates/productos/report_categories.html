@@ -1,0 +1,44 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Productos por categoría | Reportes{% endblock %}
+
+{% block content %}
+<div class="admin-page__intro">
+  <p class="eyebrow eyebrow--muted">REPORTE DE CATÁLOGO</p>
+  <h1>Productos por categoría</h1>
+  <p>Conteo de productos, precio promedio y stock total por grupo.</p>
+</div>
+
+<div class="report-category-list">
+  {% for categoria in categorias %}
+  <section class="report-category">
+    <header class="report-category__heading">
+      <div>
+        <p class="eyebrow eyebrow--muted">CATEGORÍA</p>
+        <h2>{{ categoria.nombre }}</h2>
+      </div>
+      <span class="report-category__count">{{ categoria.total_productos }} producto{{ categoria.total_productos|pluralize:"s" }}</span>
+    </header>
+    <div class="report-metrics">
+      <div><span>Productos registrados</span><strong>{{ categoria.total_productos }}</strong></div>
+      <div><span>Precio promedio</span><strong>{% if categoria.precio_promedio is not None %}CLP ${{ categoria.precio_promedio|floatformat:"0g" }}{% else %}—{% endif %}</strong></div>
+      <div><span>Stock total</span><strong>{{ categoria.stock_total|default_if_none:0 }}</strong></div>
+    </div>
+    <div class="report-products">
+      <h3>Productos individuales</h3>
+      {% for producto in categoria.producto_set.all %}
+      <div class="report-products__row">
+        <span>{{ producto.nombre }}</span>
+        <span>CLP ${{ producto.precio|floatformat:"0g" }}</span>
+        <span>Stock: {{ producto.stock }}</span>
+      </div>
+      {% empty %}
+      <p class="report-empty">No hay productos registrados en esta categoría.</p>
+      {% endfor %}
+    </div>
+  </section>
+  {% empty %}
+  <section class="report-empty-card">No hay categorías registradas.</section>
+  {% endfor %}
+</div>
+{% endblock %}

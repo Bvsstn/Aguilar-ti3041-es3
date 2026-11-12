@@ -429,10 +429,14 @@ class AdminProductManagementTests(TestCase):
 
         response = self.client.get(reverse('admin_panel'))
         self.assertContains(response, 'Ver listado y modificar productos')
-        self.assertEqual(response.content.count(b'<a class="admin-option'), 1)
+        self.assertContains(response, 'Ver reportes')
+        self.assertEqual(response.content.count(b'<a class="admin-option'), 2)
 
         response = self.client.get(reverse('admin_product_list'))
         self.assertContains(response, self.product.nombre)
+        self.assertContains(response, reverse('admin_reports'))
+        self.assertContains(response, reverse('admin_category_report'))
+        self.assertContains(response, reverse('admin_stock_report'))
         self.assertContains(response, 'Disponible')
         self.assertContains(response, self.category.nombre)
         self.assertContains(response, 'name="q"')
@@ -532,3 +536,99 @@ class AdminProductManagementTests(TestCase):
                 self.assertTrue(
                     os.path.isfile(os.path.join(media_root, str(product.imagen_archivo)))
                 )
+
+
+class AdminReportTests(TestCase):
+    def setUp(self):
+        self.User = get_user_model()
+        self.staff = self.User.objects.create_user(
+            username='report-admin',
+            password='ReportSeguro-2026!',
+            is_staff=True,
+        )
+        self.category = Categoria.objects.create(
+            nombre='Pinturas',
+            descripcion='Pinturas de prueba.',
+        )
+        self.other_category = Categoria.objects.create(
+            nombre='Herramientas',
+            descripcion='Herramientas de prueba.',
+        )
+        self.product_a = Producto.objects.create(
+            nombre='Pintura blanca',
+            categoria=self.category,
+            precio='1000.00',
+            stock=2,
+            imagen_url='https://example.com/pintura.jpg',
+        )
+        self.product_b = Producto.objects.create(
+            nombre='Pintura azul',
+            categoria=self.category,
+            precio='2000.00',
+            stock=0,
+            imagen_url='https://example.com/azul.jpg',
+        )
+        Producto.objects.create(
+            nombre='Sierra disponible',
+            categoria=self.other_category,
+            precio='5000.00',
+            stock=10,
+            imagen_url='https://example.com/sierra.jpg',
+        )
+        self.client.force_login(self.staff)
+
+    def test_reports_dashboard_and_base_navigation_link_to_each_report(self):
+        response = self.client.get(reverse('admin_reports'))
+
+        self.assertContains(response, 'Productos por categoría')
+        self.assertContains(response, 'Stock crítico y no disponibles')
+        self.assertContains(response, reverse('admin_category_report'))
+        self.assertContains(response, reverse('admin_stock_report'))
+
+        response = self.client.get(reverse('admin_category_report'))
+        self.assertContains(response, 'Stock crítico')
+        self.assertContains(response, 'Productos')
+
+    def test_category_report_aggregates_count_average_price_and_stock(self):
+        response = self.client.get(reverse('admin_category_report'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'productos/report_categories.html')
+        category_report = next(
+            item
+            for item in response.context['categorias']
+            if item.pk == self.category.pk
+        )
+        self.assertEqual(category_report.total_productos, 2)
+        self.assertEqual(category_report.precio_promedio, 1500)
+        self.assertEqual(category_report.stock_total, 2)
+        self.assertContains(response, self.product_a.nombre)
+        self.assertContains(response, self.product_b.nombre)
+
+    def test_critical_stock_report_filters_by_threshold_and_orders_stock(self):
+        response = self.client.get(
+            reverse('admin_stock_report'),
+            {'umbral': 2},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'productos/report_stock.html')
+        self.assertEqual(
+            [producto.pk for producto in response.context['productos']],
+            [self.product_b.pk, self.product_a.pk],
+        )
+        self.assertNotContains(response, 'Sierra disponible')
+        self.assertContains(response, 'No disponible')
+        self.assertContains(response, 'Stock crítico')
+
+    def test_critical_stock_report_uses_default_threshold_for_invalid_input(self):
+        response = self.client.get(
+            reverse('admin_stock_report'),
+            {'umbral': 'invalido'},
+        )
+
+        self.assertEqual(response.context['threshold'], 5)
+        self.assertEqual(
+            [product.pk for product in response.context['productos']],
+            [self.product_b.pk, self.product_a.pk],
+        )
